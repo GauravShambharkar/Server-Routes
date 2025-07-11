@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express());
 
-app.get("/", (req, res) => {
+app.get("/user", (req, res) => {
   res.send({
     msg: "route designed for user access",
   });
