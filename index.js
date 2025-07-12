@@ -18,6 +18,7 @@ app.get("/admin", (req, res) => {
 
 app.post("/admin", (req, res) => {
   const { name, email } = req.body;
+  fs.appendFileSync("adminData.txt", `{\nname: ${name},\nemail: ${email}\n}\n`);
   res.send({
     name,
     email,
