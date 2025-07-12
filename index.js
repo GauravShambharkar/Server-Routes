@@ -1,23 +1,32 @@
 const express = require("express");
 const app = express();
+const fs = require("fs");
 
-app.use(express());
+app.use(express.json());
 
 app.get("/user", (req, res) => {
   res.send({
-    msg: "route designed for user access",
+    msg: "User access",
   });
 });
 
 app.get("/admin", (req, res) => {
   res.send({
-    msg: "route designed for admin access",
+    msg: "Admin access",
+  });
+});
+
+app.post("/admin", (req, res) => {
+  const { name, email } = req.body;
+  res.send({
+    name,
+    email,
   });
 });
 
 app.get("/course", (req, res) => {
   res.send({
-    msg: "route designed for course access",
+    msg: "Course access",
   });
 });
 
