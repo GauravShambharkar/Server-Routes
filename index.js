@@ -1,35 +1,17 @@
 const express = require("express");
 const app = express();
-const fs = require("fs");
+const mongoose = require("mongoose");
+const { databaseString } = require("./config");
+
+// mongoose.connect(databaseString);
 
 app.use(express.json());
 
-app.get("/user", (req, res) => {
-  res.send({
-    msg: "User access",
-  });
-});
+const userRoute = require("./Routes/user");
+const adminRoute = require("./Routes/admin");
 
-app.get("/admin", (req, res) => {
-  res.send({
-    msg: "Admin access",
-  });
-});
-
-app.post("/admin", (req, res) => {
-  const { name, email } = req.body;
-  fs.appendFileSync("adminData.txt", `{\nname: ${name},\nemail: ${email}\n}\n`);
-  res.send({
-    name,
-    email,
-  });
-});
-
-app.get("/course", (req, res) => {
-  res.send({
-    msg: "Course access",
-  });
-});
+app.use("/user", userRoute);
+app.use("/admin", adminRoute);
 
 const port = process.env.port || 3000;
 
