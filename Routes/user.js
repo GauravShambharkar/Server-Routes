@@ -14,10 +14,12 @@ userRoute.get("/", (req, res) => {
 userRoute.post("/register", async (req, res) => {
   const { name, email } = req.body;
 
-  await userModel.create({
-    name,
-    email,
-  });
+  //   await userModel.create({
+  //     name,
+  //     email,
+  //   });
+
+  fs.appendFileSync("adminData.txt", `{\n name : ${name},\n email : ${email} \n}`);
 
   res.send({
     msg: "registered succesfully",
