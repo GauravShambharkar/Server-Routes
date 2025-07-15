@@ -2,10 +2,12 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const { databaseString } = require("./config");
+const cors = require("cors");
 
 // mongoose.connect(databaseString);
 
 app.use(express.json());
+app.use(cors());
 
 const userRoute = require("./Routes/user");
 const adminRoute = require("./Routes/admin");

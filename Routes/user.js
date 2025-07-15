@@ -18,8 +18,15 @@ userRoute.post("/register", async (req, res) => {
   //     name,
   //     email,
   //   });
-
-  fs.appendFileSync("adminData.txt", `{\n name : ${name},\n email : ${email} \n}`);
+  const userFound = fs.readFileSync("adminData.txt");
+  if (userFound.includes(email)) {
+    res.send({ message: "User already exists" });
+  } else {
+    fs.appendFileSync(
+      "adminData.txt",
+      `{\n name : ${name},\n email : ${email} \n}\n`
+    );
+  }
 
   res.send({
     msg: "registered succesfully",

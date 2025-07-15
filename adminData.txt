@@ -1,4 +1,4 @@
 {
- name : gv,
- email : shah@gmail.com 
+ name : delulu,
+ email : beingDelulu@gmail.com 
 }
