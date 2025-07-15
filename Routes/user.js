@@ -6,9 +6,7 @@ const userRoute = express.Router();
 const { userModel } = require("../db");
 
 userRoute.get("/", (req, res) => {
-  res.send({
-    message: "Welcome to user route",
-  });
+  res.send(fs.readFileSync("userData.json"));
 });
 
 userRoute.post("/register", async (req, res) => {
@@ -23,7 +21,7 @@ userRoute.post("/register", async (req, res) => {
     res.send({ message: "User already exists" });
   } else {
     fs.appendFileSync(
-      "userData.txt",
+      "userData.json",
       `{\n name : ${name},\n email : ${email} \n}\n`
     );
   }
