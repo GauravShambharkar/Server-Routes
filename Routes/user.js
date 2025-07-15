@@ -4,6 +4,7 @@ const fs = require("fs");
 const userRoute = express.Router();
 
 const { userModel } = require("../db");
+const { emit } = require("process");
 
 userRoute.get("/", (req, res) => {
   res.send(fs.readFileSync("userData.json"));
@@ -16,13 +17,15 @@ userRoute.post("/register", async (req, res) => {
   //     name,
   //     email,
   //   });
-  const userFound = fs.readFileSync("userData.txt");
+  const userFound = fs.readFileSync("userData.json");
   if (userFound.includes(email)) {
     res.send({ message: "User already exists" });
   } else {
     fs.appendFileSync(
       "userData.json",
-      `{\n name : ${name},\n email : ${email} \n}\n`
+      `{\n "name" : ${JSON.stringify(name)},\n "email" : ${JSON.stringify(
+        email
+      )} \n},\n`
     );
   }
 
