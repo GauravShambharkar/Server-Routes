@@ -13,8 +13,8 @@ const adminSchema = new schema({
   password: String,
 });
 
-const userModel = mongoose.model("user", userSchema);
-const adminModel = mongoose.model("admin", adminSchema);
+const userModel = mongoose.model("test_User", userSchema);
+const adminModel = mongoose.model("test_Admin", adminSchema);
 
 module.exports = {
   userModel,

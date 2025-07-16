@@ -4,19 +4,23 @@ const mongoose = require("mongoose");
 const { databaseString } = require("./config");
 const cors = require("cors");
 
-// mongoose.connect(databaseString);
+mongoose.connect(databaseString);
 
 app.use(express.json());
 app.use(cors());
 
-const userRoute = require("./Routes/user");
-const adminRoute = require("./Routes/admin");
+const userRoute = require("./Routes/testUser");
+const adminRoute = require("./Routes/testAdmin");
 
 app.use("/user", userRoute);
 app.use("/admin", adminRoute);
 
 const port = process.env.port || 3000;
 
-app.listen(port, () => {
-  console.log("server is running succesfully");
+const server = app.listen(port, () => {
+  console.log("Server is running successfully");
+});
+
+server.on("error", (err) => {
+  console.log("Server failed to start: " + err.message);
 });
