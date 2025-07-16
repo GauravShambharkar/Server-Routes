@@ -4,6 +4,7 @@ const fs = require("fs");
 const userRoute = express.Router();
 
 const { userModel } = require("../db");
+const { default: mongoose } = require("mongoose");
 
 userRoute.get("/", (req, res) => {
   // res.send(fs.readFileSync("userData.json"));
@@ -15,13 +16,22 @@ userRoute.get("/", (req, res) => {
 userRoute.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
-  await userModel.create({
-    name,
-    email,
-    password,
-  });
-  // const userFound = fs.readFileSync("userData.json");
-  // if (userFound.includes(email)) {
+  const user = await userModel.findOne({ email });
+
+  if (user) {
+    res.send({
+      message: "User already exists",
+    });
+  } else {
+    await userModel.create({
+      name,
+      email,
+      password,
+    });
+  }
+
+  // const user = fs.readFileSync("userData.json");
+  // if (user.includes(email)) {
   //   res.send({ message: "User already exists" });
   // } else {
   //   fs.appendFileSync(
@@ -33,7 +43,7 @@ userRoute.post("/register", async (req, res) => {
   // }
 
   res.send({
-    msg: "new user registered succesfully",
+    msg: `${name} your account is created succesfully`,
   });
 });
 
