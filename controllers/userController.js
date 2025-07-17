@@ -1,5 +1,6 @@
 const { userModel } = require("../db");
 const bcrypt = require("bcrypt");
+const { userMiddleware } = require("../middleware/userMiddleware");
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -35,6 +36,7 @@ const registerUser = async (req, res) => {
     msg: `${name} your account is created succesfully`,
   });
 };
+
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
