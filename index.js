@@ -12,8 +12,8 @@ app.use(cors());
 const userRoute = require("./Routes/testUser");
 const adminRoute = require("./Routes/testAdmin");
 
-app.use("/user", userRoute);
-app.use("/admin", adminRoute);
+app.use("/testuser", userRoute);
+app.use("/testqdmin", adminRoute);
 
 const port = process.env.port || 3000;
 
