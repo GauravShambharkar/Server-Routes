@@ -1,21 +1,28 @@
 const { userModel } = require("../db");
+const bcrypt = require("bcrypt");
 
 const userMiddleware = async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = userModel.findOne({ password, email });
+  try {
+    const { email, password } = req.body;
 
-  if (user) {
-    const validuser = await bcrypt.compare(user.password, password);
-    if (validuser) {
-      next();
-      res.send({
-        msg: "logged in succesfully",
-      });
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(401).send({ msg: "User not found" });
     }
-  } else
-    res.send({
-      msg: "not valid credentials",
-    });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.send({ msg: "Invalid credentials" });
+    }
+
+    // Credentials valid, move to next middleware or controller
+    next();
+  } catch (err) {
+    console.error("Error in userMiddleware:", err);
+    res.status(500).send({ msg: "Internal server error" });
+  }
 };
 
 module.exports = { userMiddleware };
