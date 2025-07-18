@@ -59,7 +59,9 @@ const updateUser = async (req, res) => {
   if (user) {
     user.name = name;
     await user.save();
-    return res.send({ msg: "user updated succesfully" });
+    return res.send({ msg: "user updated succesfully",
+      userId: user._id
+     });
   } else {
     return res.send({ msg: "user not found" });
   }
