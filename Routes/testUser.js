@@ -3,7 +3,7 @@ const fs = require("fs");
 const userRoute = express.Router();
 const { userModel } = require("../db");
 const { mongoose } = require("mongoose");
-const { registerUser, loginUser } = require("../controllers/userController");
+const { registerUser, loginUser, updateUser } = require("../controllers/userController");
 const { userMiddleware } = require("../middleware/userMiddleware");
 
 userRoute.get("/", (req, res) => {
@@ -16,5 +16,7 @@ userRoute.get("/", (req, res) => {
 userRoute.post("/register", registerUser);
 
 userRoute.post("/login", userMiddleware, loginUser);
+
+userRoute.put("/update", updateUser);
 
 module.exports = userRoute;

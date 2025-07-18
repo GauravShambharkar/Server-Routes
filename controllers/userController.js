@@ -37,7 +37,6 @@ const registerUser = async (req, res) => {
   });
 };
 
-
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   const foundUser = await userModel.findOne({ email });
@@ -52,7 +51,22 @@ const loginUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  const { name, email } = req.body;
+
+  const user = await userModel.findOne({ email });
+
+  if (user) {
+    user.name = name;
+    await user.save();
+    return res.send({ msg: "user updated succesfully" });
+  } else {
+    return res.send({ msg: "user not found" });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  updateUser,
 };
