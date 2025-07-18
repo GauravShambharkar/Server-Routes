@@ -9,7 +9,7 @@ const registerUser = async (req, res) => {
   const hashedPass = bcrypt.hashSync(password, 10);
 
   if (user) {
-    res.send({
+    res.status(500).send({
       message: "User already exists",
     });
   } else {
