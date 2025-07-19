@@ -15,7 +15,7 @@ userRoute.get("/", (req, res) => {
 userRoute.post("/register", registerUser);
 
 userRoute.post("/login", userMiddleware, loginUser);
-userRoute.post("/token", jwt_Verification_Middleware, loginUser);
+userRoute.post("/login/token", jwt_Verification_Middleware, loginUser);
 
 
 userRoute.put("/update", updateUser);
