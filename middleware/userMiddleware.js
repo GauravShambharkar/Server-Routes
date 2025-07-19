@@ -1,5 +1,7 @@
 const { userModel } = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { user_jwt_secret } = require("../config");
 
 const userMiddleware = async (req, res, next) => {
   try {
@@ -25,4 +27,16 @@ const userMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { userMiddleware };
+const jwt_Verification_Middleware = async (req, res, next) => {
+  const token = req.body.token;
+  const validUser = await jwt.verify(token, user_jwt_secret);
+  if (validUser)
+    res.send({
+      msg: "valid token",
+    });
+  else {
+    res.status(401).send({ msg: "Invalid token" });
+  }
+};
+
+module.exports = { userMiddleware, jwt_Verification_Middleware };

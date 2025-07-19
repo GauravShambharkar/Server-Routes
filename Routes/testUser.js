@@ -1,10 +1,7 @@
 const express = require("express");
-const fs = require("fs");
 const userRoute = express.Router();
-const { userModel } = require("../db");
-const { mongoose } = require("mongoose");
 const { registerUser, loginUser, updateUser } = require("../controllers/userController");
-const { userMiddleware } = require("../middleware/userMiddleware");
+const { userMiddleware, jwt_Verification_Middleware } = require("../middleware/userMiddleware");
 
 userRoute.get("/", (req, res) => {
   // res.send(fs.readFileSync("userData.json"));
@@ -13,9 +10,13 @@ userRoute.get("/", (req, res) => {
   });
 });
 
+
+
 userRoute.post("/register", registerUser);
 
 userRoute.post("/login", userMiddleware, loginUser);
+userRoute.post("/token", jwt_Verification_Middleware, loginUser);
+
 
 userRoute.put("/update", updateUser);
 
