@@ -1,6 +1,7 @@
 const { userModel } = require("../db");
 const bcrypt = require("bcrypt");
-const { userMiddleware } = require("../middleware/userMiddleware");
+const jwt = require("jsonwebtoken");
+const { user_jwt_secret } = require("../config");
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -41,9 +42,16 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
   const foundUser = await userModel.findOne({ email });
   if (foundUser) {
-    res.send({
-      msg: "logged in succesfully",
-    });
+    const valid_Pass = await bcrypt.compare(password, foundUser.password);
+    if (valid_Pass) {
+      const token = jwt.sign({ id: foundUser._id }, user_jwt_secret);
+      res.send({
+        token: token,
+        // msg: "logged in succesfully",
+      });
+    } else {
+      res.status(500).send({ message: "Invalid password" });
+    }
   } else {
     res.send({
       msg: "user not found",
@@ -59,9 +67,7 @@ const updateUser = async (req, res) => {
   if (user) {
     user.name = name;
     await user.save();
-    return res.send({ msg: "user updated succesfully",
-      userId: user._id
-     });
+    return res.send({ msg: "user updated succesfully", userId: user._id });
   } else {
     return res.send({ msg: "user not found" });
   }
