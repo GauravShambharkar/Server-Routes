@@ -40,22 +40,22 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  const foundUser = await userModel.findOne({ email });
-  if (foundUser) {
-    const valid_Pass = await bcrypt.compare(password, foundUser.password);
-    if (valid_Pass) {
-      const token = jwt.sign({ id: foundUser._id }, user_jwt_secret);
+
+  const user = await userModel.findOne({ email });
+  const isValid = await bcrypt.compare(password, user.password);
+  if (isValid) {
+    const token = await jwt.sign({ id: user._id }, user_jwt_secret);
+    if (token) {
       res.send({
         token: token,
-        // msg: "logged in succesfully",
       });
     } else {
-      res.status(500).send({ message: "Invalid password" });
+      res.status(500).send({
+        message: "Failed to generate token",
+      });
     }
   } else {
-    res.send({
-      msg: "user not found",
-    });
+    res.status(401).send({ message: "Invalid email or password" });
   }
 };
 

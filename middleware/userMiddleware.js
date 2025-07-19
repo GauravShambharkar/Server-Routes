@@ -30,11 +30,12 @@ const userMiddleware = async (req, res, next) => {
 const jwt_Verification_Middleware = async (req, res, next) => {
   const token = req.body.token;
   const validUser = await jwt.verify(token, user_jwt_secret);
-  if (validUser)
+  if (validUser) {
     res.send({
       msg: "valid token",
     });
-  else {
+    next();
+  } else {
     res.status(401).send({ msg: "Invalid token" });
   }
 };
