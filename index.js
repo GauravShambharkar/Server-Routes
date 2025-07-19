@@ -21,6 +21,7 @@ const server = app.listen(port, () => {
   console.log("Server is running successfully");
 });
 
+
 server.on("error", (err) => {
   console.log("Server failed to start: " + err.message);
 });
