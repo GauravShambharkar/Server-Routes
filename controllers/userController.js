@@ -59,6 +59,12 @@ const loginUser = async (req, res) => {
   }
 };
 
+const jwtValid = async (req, res) => {
+  res.send({
+    msg: "Token is valid",
+  });
+};
+
 const updateUser = async (req, res) => {
   const { name, email } = req.body;
 
@@ -76,5 +82,6 @@ const updateUser = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  jwtValid,
   updateUser,
 };

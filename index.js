@@ -13,7 +13,7 @@ const userRoute = require("./Routes/testUser");
 const adminRoute = require("./Routes/testAdmin");
 
 app.use("/testuser", userRoute);
-app.use("/testqdmin", adminRoute);
+app.use("/testadmin", adminRoute);
 
 const port = process.env.port || 3000;
 
