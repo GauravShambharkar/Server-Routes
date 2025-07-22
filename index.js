@@ -6,11 +6,17 @@ const cors = require("cors");
 
 mongoose.connect(databaseString);
 
-app.use(express.json());
-app.use(cors());
+const corsOptions = {
+  origin: ["http://localhost:5500", "http://127.0.0.1:5500"],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  credentials: true,
+};
 
-const userRoute = require("./Routes/testUser");
-const adminRoute = require("./Routes/testAdmin");
+app.use(cors(corsOptions));
+app.use(express.json());
+
+const userRoute = require("./Routes/route.User");
+const adminRoute = require("./Routes/route.Admin");
 
 app.use("/testuser", userRoute);
 app.use("/testadmin", adminRoute);
@@ -20,7 +26,6 @@ const port = process.env.port || 3000;
 const server = app.listen(port, () => {
   console.log("Server is running successfully");
 });
-
 
 server.on("error", (err) => {
   console.log("Server failed to start: " + err.message);

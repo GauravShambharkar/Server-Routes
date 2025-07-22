@@ -71,11 +71,26 @@ const updateUser = async (req, res) => {
   const user = await userModel.findOne({ email });
 
   if (user) {
-    user.name = name;
-    await user.save();
+    await userModel.updateOne({email}, {email: email}, {new: true})
     return res.send({ msg: "user updated succesfully", userId: user._id });
   } else {
     return res.send({ msg: "user not found" });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { email, password } = req.body;
+  const valid = await userModel.findOne({ email });
+  if (valid) {
+    const validPass = await bcrypt.compare(password, valid.password);
+    if (validPass) {
+      await userModel.findOneAndDelete(valid._id);
+      res.send({
+        msg: "user deleted successfully",
+      });
+    } else {
+      res.status(401).send({ msg: "Invalid password" });
+    }
   }
 };
 
@@ -84,4 +99,5 @@ module.exports = {
   loginUser,
   jwtValid,
   updateUser,
+  deleteUser,
 };
