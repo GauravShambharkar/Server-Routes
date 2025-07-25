@@ -92,6 +92,9 @@ const deleteUser = async (req, res) => {
       res.status(401).send({ msg: "Invalid password" });
     }
   }
+   else{
+    res.status(404).send({ msg: "User not found" });
+  }
 };
 
 module.exports = {
