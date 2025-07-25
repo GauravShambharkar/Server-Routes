@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { admin_jwt_secret } = require("../config");
 const adminRoute = express.Router();
-const { adminModel } = require("../db");
+const { adminModel } = require("../Models/models");
 
 adminRoute.get("/", (req, res) => {
   res.send({

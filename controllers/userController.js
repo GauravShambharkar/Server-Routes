@@ -1,4 +1,4 @@
-const { userModel } = require("../db");
+const { userModel } = require("../Models/models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { user_jwt_secret } = require("../config");
@@ -71,7 +71,7 @@ const updateUser = async (req, res) => {
   const user = await userModel.findOne({ email });
 
   if (user) {
-    await userModel.updateOne({email}, {email: email}, {new: true})
+    await userModel.updateOne({ email }, { email: email }, { new: true });
     return res.send({ msg: "user updated succesfully", userId: user._id });
   } else {
     return res.send({ msg: "user not found" });
@@ -91,8 +91,7 @@ const deleteUser = async (req, res) => {
     } else {
       res.status(401).send({ msg: "Invalid password" });
     }
-  }
-   else{
+  } else {
     res.status(404).send({ msg: "User not found" });
   }
 };
