@@ -22,18 +22,6 @@ const registerUser = async (req, res) => {
     });
   }
 
-  // const user = fs.readFileSync("userData.json");
-  // if (user.includes(email)) {
-  //   res.send({ message: "User already exists" });
-  // } else {
-  //   fs.appendFileSync(
-  //     "userData.json",
-  //     `{\n "name" : ${JSON.stringify(name)},\n "email" : ${JSON.stringify(
-  //       email
-  //     )} \n},\n`
-  //   );
-  // }
-
   res.send({
     name,
     email,
