@@ -10,7 +10,8 @@ const registerUser = async (req, res) => {
   const hashedPass = bcrypt.hashSync(password, 10);
 
   if (user) {
-    res.status(500).send({
+    res.status(409).send({
+      unique: false,
       message: "User already exists",
     });
   } else {
@@ -34,7 +35,11 @@ const registerUser = async (req, res) => {
   // }
 
   res.send({
-    msg: `${name} your account is created succesfully`,
+    name,
+    email,
+    unique: true,
+    password: true,
+    res: true,
   });
 };
 
@@ -55,7 +60,10 @@ const loginUser = async (req, res) => {
       });
     }
   } else {
-    res.status(401).send({ message: "Invalid email or password" });
+    res.status(401).send({
+      email: false,
+      message: "Invalid email or password",
+    });
   }
 };
 

@@ -7,7 +7,7 @@ const cors = require("cors");
 mongoose.connect(databaseString);
 
 const corsOptions = {
-  origin: ["http://localhost:5500", "http://127.0.0.1:5500"],
+  origin: "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   credentials: true,
 };
