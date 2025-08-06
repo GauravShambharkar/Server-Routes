@@ -46,7 +46,7 @@ const Login = () => {
       const user = error.response;
       if (!user) setErr("wrong email credential");
       else {
-        setErr("server having an issues");
+        setErr("user not found");
       }
     }
   };

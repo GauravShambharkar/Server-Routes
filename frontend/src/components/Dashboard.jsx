@@ -17,15 +17,15 @@ const Dashboard = () => {
   useEffect(() => {
     const tokenValid = localStorage.getItem("token");
     if (tokenValid) {
-      setIsLoggedIn(true);
+      setIsLoggedIn(tokenValid);
       setUser({
         name: localStorage.getItem("name"),
         email: localStorage.getItem("email"),
         token: localStorage.getItem("token"),
       });
-    } else {
-      setIsLoggedIn(false);
-      navigate("/login");
+    }
+    else{
+      navigate("/login")
     }
   }, []);
 
@@ -36,8 +36,8 @@ const Dashboard = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("name");
       localStorage.removeItem("email");
+      navigate("/login"); 
       window.location.reload();
-      navigate("/login");
     }, 1000);
   };
 

@@ -7,9 +7,7 @@ const Nav = () => {
   const [isloggedIn, setIsloggedIn] = useState(false);
   useEffect(() => {
     const validToken = localStorage.getItem("token");
-    if (validToken) {
-      setIsloggedIn(true);
-    } else setIsloggedIn(false);
+    setIsloggedIn(validToken);
   }, []);
 
   return (
