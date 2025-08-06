@@ -5,9 +5,9 @@ import Routers from "./components/router/Routers";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Nav />
-    </div>
+      <div className="min-h-screen bg-gray-100">
+        <Nav />
+      </div>
   );
 }
 

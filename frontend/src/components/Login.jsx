@@ -19,7 +19,6 @@ const Login = () => {
     setMsg("");
     setErr("");
 
-
     try {
       if (user.password.length >= 8) {
         const response = await axios.post(
@@ -36,6 +35,7 @@ const Login = () => {
           setMsg("logged in succesfully");
           setTimeout(() => {
             navigate("/dashboard");
+            window.location.reload();
           }, 1000);
         }
       } else {

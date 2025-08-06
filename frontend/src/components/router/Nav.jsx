@@ -10,7 +10,7 @@ const Nav = () => {
     if (validToken) {
       setIsAuthenticate(true);
     } else setIsAuthenticate(false);
-  }, [isAuthenticate]);
+  }, []);
 
   return (
     <nav className="bg-gray-800 text-white p-4">

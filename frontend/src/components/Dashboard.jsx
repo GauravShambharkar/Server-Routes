@@ -27,7 +27,7 @@ const Dashboard = () => {
       setIsAuthenticate(false);
       navigate("/login");
     }
-  }, [isAuthenticate,user]);
+  }, []);
 
   const handlelogOut = () => {
     setmsg("login out...");
@@ -36,6 +36,7 @@ const Dashboard = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("name");
       localStorage.removeItem("email");
+      window.location.reload();
       navigate("/login");
     }, 1000);
   };
