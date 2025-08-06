@@ -3,10 +3,48 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Dashboard = () => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    token: "",
+  });
+  const navigate = useNavigate();
 
+  const [isAuthenticate, setIsAuthenticate] = useState(false);
+
+  const [msg, setmsg] = useState();
+
+  useEffect(() => {
+    const tokenValid = localStorage.getItem("token");
+    if (tokenValid) {
+      setIsAuthenticate(true);
+      setUser({
+        name: localStorage.getItem("name"),
+        email: localStorage.getItem("email"),
+        token: localStorage.getItem("token"),
+      });
+    } else {
+      setIsAuthenticate(false);
+      navigate("/login");
+    }
+  }, [isAuthenticate,user]);
+
+  const handlelogOut = () => {
+    setmsg("login out...");
+    setTimeout(() => {
+      setIsAuthenticate(false);
+      localStorage.removeItem("token");
+      localStorage.removeItem("name");
+      localStorage.removeItem("email");
+      navigate("/login");
+    }, 1000);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <div className="w-fit px-3 bg-black rounded-lg h-8 flex items-center shadow-2xl fixed bottom-30 right-114 border-gray-400 border text-white font-medium">
+        {msg}
+      </div>
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="bg-white overflow-hidden shadow rounded-lg">
@@ -16,20 +54,22 @@ const Dashboard = () => {
                   Welcome to your Dashboard
                 </h3>
                 <button
-                  onClick={''}
+                  onClick={handlelogOut}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   Logout
                 </button>
               </div>
 
-              {'' && (
+              {!isAuthenticate && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
-                  <p className="text-red-600 text-sm">{error}</p>
+                  <p className="text-red-600 text-sm">
+                    "userNot authenticated"
+                  </p>
                 </div>
               )}
 
-              {'' && (
+              {isAuthenticate && (
                 <div className="bg-gray-50 px-4 py-5 sm:p-6 rounded-md">
                   <h4 className="text-md font-medium text-gray-900 mb-4">
                     User Information
@@ -39,16 +79,14 @@ const Dashboard = () => {
                       <span className="text-sm font-medium text-gray-500 w-20">
                         Name:
                       </span>
-                      <span className="text-sm text-gray-900">
-                        usrName
-                      </span>
+                      <span className="text-sm text-gray-900">{user.name}</span>
                     </div>
                     <div className="flex items-center">
                       <span className="text-sm font-medium text-gray-500 w-20">
                         Email:
                       </span>
                       <span className="text-sm text-gray-900">
-                        userEmail
+                        {user.email}
                       </span>
                     </div>
                     <div className="flex items-center">
@@ -56,7 +94,7 @@ const Dashboard = () => {
                         User ID:
                       </span>
                       <span className="text-sm text-gray-900">
-                        userId
+                        {user.token}
                       </span>
                     </div>
                   </div>

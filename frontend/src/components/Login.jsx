@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,27 +19,32 @@ const Login = () => {
     setMsg("");
     setErr("");
 
+
     try {
       if (user.password.length >= 8) {
-        const res = await axios.post(
+        const response = await axios.post(
           "http://localhost:3000/testuser/login",
           {
-            name: user.name,
             email: user.email,
+            password: user.password,
           }
         );
-
-        setMsg("Account created succesfully");
-        setTimeout(() => {
-          navigate("/d");
-        }, 1000);
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("email", response.data.email);
+          localStorage.setItem("name", response.data.name);
+          setMsg("logged in succesfully");
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 1000);
+        }
       } else {
-        setErr("Password must be at least 8 characters");
+        setErr("wrong password credential");
         // alert("Password must be at least 8 characters");
       }
-    } catch (e) {
-      const { unique } = e.response;
-      if (!unique) setErr("user with this email already exist");
+    } catch (error) {
+      const user = error.response;
+      if (!user) setErr("wrong email credential");
       else {
         setErr("server having an issues");
       }
@@ -87,7 +94,7 @@ const Login = () => {
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
             >
-              Register
+              Login
             </button>
           </div>
         </form>

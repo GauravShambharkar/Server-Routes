@@ -47,13 +47,13 @@ const loginUser = async (req, res) => {
     } else {
       res.status(500).send({
         token: false,
-        message: "Invalid token",
+        msg: "Invalid token",
       });
     }
   } else {
     res.status(401).send({
       user: false,
-      message: "Invalid email or password",
+      msg: "Invalid email or password",
     });
   }
 };
