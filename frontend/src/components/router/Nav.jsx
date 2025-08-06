@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const Nav = () => {
-  const [isAuthenticate, setIsAuthenticate] = useState(false);
+  const [isloggedIn, setIsloggedIn] = useState(false);
   useEffect(() => {
     const validToken = localStorage.getItem("token");
     if (validToken) {
-      setIsAuthenticate(true);
-    } else setIsAuthenticate(false);
+      setIsloggedIn(true);
+    } else setIsloggedIn(false);
   }, []);
 
   return (
@@ -18,7 +18,7 @@ const Nav = () => {
         <div className="text-xl font-bold">
           <Link to="/">Client Routes</Link>
         </div>
-        {isAuthenticate ? (
+        {isloggedIn ? (
           <Link
             to="/dashboard"
             className="hover:text-gray-300 transition-colors"

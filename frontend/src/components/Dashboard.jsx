@@ -10,21 +10,21 @@ const Dashboard = () => {
   });
   const navigate = useNavigate();
 
-  const [isAuthenticate, setIsAuthenticate] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [msg, setmsg] = useState();
 
   useEffect(() => {
     const tokenValid = localStorage.getItem("token");
     if (tokenValid) {
-      setIsAuthenticate(true);
+      setIsLoggedIn(true);
       setUser({
         name: localStorage.getItem("name"),
         email: localStorage.getItem("email"),
         token: localStorage.getItem("token"),
       });
     } else {
-      setIsAuthenticate(false);
+      setIsLoggedIn(false);
       navigate("/login");
     }
   }, []);
@@ -32,7 +32,7 @@ const Dashboard = () => {
   const handlelogOut = () => {
     setmsg("login out...");
     setTimeout(() => {
-      setIsAuthenticate(false);
+      setIsLoggedIn(false);
       localStorage.removeItem("token");
       localStorage.removeItem("name");
       localStorage.removeItem("email");
@@ -62,7 +62,7 @@ const Dashboard = () => {
                 </button>
               </div>
 
-              {!isAuthenticate && (
+              {!isLoggedIn && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
                   <p className="text-red-600 text-sm">
                     "userNot authenticated"
@@ -70,7 +70,7 @@ const Dashboard = () => {
                 </div>
               )}
 
-              {isAuthenticate && (
+              {isLoggedIn && (
                 <div className="bg-gray-50 px-4 py-5 sm:p-6 rounded-md">
                   <h4 className="text-md font-medium text-gray-900 mb-4">
                     User Information
