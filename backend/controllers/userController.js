@@ -40,16 +40,19 @@ const loginUser = async (req, res) => {
     const token = await jwt.sign({ id: user._id }, user_jwt_secret);
     if (token) {
       res.send({
+        name: user.name,
+        email: user.email,
         token: token,
       });
     } else {
       res.status(500).send({
-        message: "Failed to generate token",
+        token: false,
+        message: "Invalid token",
       });
     }
   } else {
     res.status(401).send({
-      email: false,
+      user: false,
       message: "Invalid email or password",
     });
   }

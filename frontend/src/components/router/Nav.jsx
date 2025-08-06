@@ -18,6 +18,12 @@ const Nav = () => {
           >
             Register
           </Link>
+          <Link
+            to="/dashboard"
+            className="hover:text-gray-300 transition-colors"
+          >
+            Dashboard
+          </Link>
         </div>
       </div>
       <Routers/>

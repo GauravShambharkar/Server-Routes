@@ -20,6 +20,11 @@ const Register = () => {
     setMsg("");
     setErr("");
 
+    if (user.password !== user.confirmPassword) {
+      setErr("password should match with each other");
+      return;
+    }
+
     try {
       if (user.password.length >= 8) {
         const res = await axios.post(
